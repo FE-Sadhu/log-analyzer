@@ -1,0 +1,18 @@
+{
+  "extends": ["stylelint-config-standard", "stylelint-config-rational-order", "stylelint-config-prettier"],
+  "plugins": [
+    "stylelint-order",
+    "stylelint-declaration-block-no-ignored-properties",
+    "stylelint-scss",
+    "stylelint-config-prettier" // 解决和 prettier 的冲突
+  ],
+  "rules": {
+    "comment-empty-line-before": null,
+    "declaration-empty-line-before": null,
+    "function-name-case": "lower",
+    "no-descending-specificity": null,
+    "no-invalid-double-slash-comments": null
+  },
+  // 加 "**/typings/**/*" 的原因：https://github.com/stylelint/vscode-stylelint/issues/72
+  "ignoreFiles": ["node_modules/**/*", "src/assets/**/*", "dist/**/*", "**/typings/**/*"]
+}

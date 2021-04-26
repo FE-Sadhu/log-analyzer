@@ -1,0 +1,80 @@
+{
+  "name": "react-ts-build-from-scratch",
+  "version": "1.0.0",
+  "description": "build from scratch",
+  "main": "index.js",
+  "scripts": {
+    "eslint": "eslint src --ext .ts,.tsx",
+    "start": "cross-env NODE_ENV=development webpack serve --config ./build/webpack.config.js --env development",
+    "build:dev": "cross-env NODE_ENV=development webpack --config ./build/webpack.config.js --env development",
+    "build": "cross-env NODE_ENV=production webpack --config ./build/webpack.config.js --env production",
+    "build:analyze": "cross-env NODE_ENV=production webpack --config ./build/webpack.config.js --env analyze",
+    "tsc:compile": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "Sadhu",
+    "url": "https://github.com/YxrSadhu",
+    "email": "sadhu.wu@gmall.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YxrSadhu/react-ts-build-from-scratch"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.13.16",
+    "@babel/plugin-transform-runtime": "^7.13.15",
+    "@babel/preset-env": "^7.13.15",
+    "@babel/preset-react": "^7.13.13",
+    "@babel/preset-typescript": "^7.13.0",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
+    "@types/webpack-env": "^1.16.0",
+    "@typescript-eslint/eslint-plugin": "^4.19.0",
+    "@typescript-eslint/parser": "^4.19.0",
+    "babel-loader": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "css-loader": "^5.2.4",
+    "css-minimizer-webpack-plugin": "^2.0.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^7.23.0",
+    "eslint-config-alloy": "^3.10.0",
+    "eslint-plugin-react": "^7.23.1",
+    "fork-ts-checker-webpack-plugin": "^6.2.4",
+    "html-webpack-plugin": "^5.3.1",
+    "mini-css-extract-plugin": "^1.5.0",
+    "postcss": "^8.2.10",
+    "postcss-loader": "^5.2.0",
+    "postcss-preset-env": "^6.7.0",
+    "prettier": "^2.2.1",
+    "react-refresh": "^0.9.0",
+    "style-loader": "^2.0.0",
+    "stylelint": "^13.12.0",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-rational-order": "^0.1.2",
+    "stylelint-config-standard": "^21.0.0",
+    "stylelint-declaration-block-no-ignored-properties": "^2.3.0",
+    "stylelint-order": "^4.1.0",
+    "stylelint-scss": "^3.19.0",
+    "typescript": "^4.2.3",
+    "webpack": "^5.32.0",
+    "webpack-bundle-analyzer": "^4.4.1",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.7.3",
+    "webpackbar": "^5.0.0-3"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.13.17",
+    "@babel/runtime-corejs3": "^7.13.17",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
+}

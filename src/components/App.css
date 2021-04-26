@@ -1,0 +1,18 @@
+.app {
+  display: flex;
+  opacity: 0.3;
+  background-color: aquamarine;
+}
+
+::placeholder {
+  color: gray;
+}
+
+.image {
+  background-image: url('../cart.png');
+}
+@media (min-resolution: 2dppx) {
+  .image {
+    background-image: url('../cart.png');
+  }
+}
