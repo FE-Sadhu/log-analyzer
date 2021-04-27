@@ -18,7 +18,7 @@
     "esModuleInterop": true /* 通过为导入内容创建命名空间，实现CommonJS和ES模块之间的互操作性, 适用于 Babel 编译 */,
     "allowSyntheticDefaultImports": true /* 允许从没有默认导出的模块中默认导入 */,
     "sourceMap": true /* 是否生成map文件 */,
-    "baseUrl": "./", // 根路径
+    "baseUrl": "./",
     "paths": {
       // 路径映射，与 baseUrl 关联
       "Src/*": ["src/*"],

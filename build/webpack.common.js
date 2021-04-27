@@ -20,7 +20,7 @@ module.exports = {
     // 配置 extensions，在 import 的时候就可以不加文件后缀名了。
     // webpack 会按照定义的后缀名的顺序依次处理文件，比如上文配置 ['.tsx', '.ts', '.js', '.json'] ，webpack 会先尝试加上 .tsx 后缀，看找得到文件不，如果找不到就依次尝试进行查找，
     // 所以我们在配置时尽量把最常用到的后缀放到最前面，可以缩短查找时间。
-    extensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
+    extensions: ['.tsx', 'css', '.ts', '.jsx', '.js', '.json'],
     alias: {
       Src: path.resolve(__dirname, '../src'),
       Components: path.resolve(__dirname, '../src/components'),

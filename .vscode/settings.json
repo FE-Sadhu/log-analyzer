@@ -28,12 +28,7 @@
   "files.eol": "\n",
   "editor.tabSize": 2,
   "prettier.requireConfig": true,
-  "cSpell.words": [
-    "corejs",
-    "pmmmwh",
-    "stylelint",
-    "webpackbar"
-  ],
+  "cSpell.words": ["corejs", "pmmmwh", "stylelint", "webpackbar"],
   // 保存文件时自动用 prettier 格式化
   "editor.formatOnSave": true,
   // 配置 VScode 使用 prettier 的 formatter
