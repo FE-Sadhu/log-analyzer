@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Header from './header/Header';
+import style from './App.css';
 
-function App(props) {
+const App: FC = () => {
   return (
-    <div className="app">
+    <div className={style.app}>
       <Header />
     </div>
   );
-}
+};
 
 export default App;

@@ -1,3 +1,10 @@
+.sun {
+  width: 50px;
+  height: 50px;
+}
+
 .slogan {
-  font-size: large;
+  text-align: center;
+  font-size: 40px;
+  font-family: 'Comic Sans MS';
 }
