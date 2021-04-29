@@ -4,7 +4,7 @@ import sun from './image/sun.png';
 
 const Header: FC = () => {
   return (
-    <div>
+    <div className={style.wrapper}>
       <div className={style.slogan}>
         <img src={sun} alt="图片加载失败" className={style.sun} />
         analyze efficiently, live easier.
