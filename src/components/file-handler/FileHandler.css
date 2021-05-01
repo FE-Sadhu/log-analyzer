@@ -13,7 +13,7 @@
 }
 
 .input {
-  width: 60vw;
+  width: 60%;
   height: 40px;
   line-height: 60px;
   font-size: 20px;
@@ -26,4 +26,20 @@
   outline: none;
   border-width: 2px;
   border-color: #999999;
+}
+
+/* drop */
+.dropArea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  height: 60%;
+  margin: 0 auto;
+  font-size: large;
+  border: 1px dashed gray;
+}
+
+.inputUpload {
+  display: none;
 }

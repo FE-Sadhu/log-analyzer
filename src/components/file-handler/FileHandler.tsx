@@ -1,24 +1,116 @@
 import React, { FC, useState } from 'react';
 import style from './FileHandler.css';
 import search from './image/search.png';
+import timeUtils from '../../utils/time';
+
+const TAG = 'FileHandler';
+interface FileInfo {
+  name: string;
+  lastModified: number;
+  lastModifiedDate?: Date;
+  size: number;
+  webkitRelativePath: string;
+  type: string;
+  arrayBuffer: () => any;
+  slice: () => any;
+  stream: () => any;
+  text: () => any;
+  // [propNames: string]: any | (() => any);
+}
+
+type FileEntity = string | null;
+
+const BEFORE_AWAKE = 'drop your file here or click';
+const AFTER_AWAKE = 'come baby';
+const FILE_INFO = {
+  name: '',
+  size: -99,
+  type: '',
+  lastModTime: '',
+};
 
 const FileHandler: FC = () => {
-  const [flag, setFlag] = useState(false);
+  const [fileEntity, setFileEntity] = useState<FileEntity>(null);
+  const [awake, setAwake] = useState(BEFORE_AWAKE);
+  const [fileInfo, setFileInfo] = useState(FILE_INFO);
 
   const onChange = (e) => {
     console.log(e);
   };
 
+  const onDrop = (e) => {
+    console.log('Drop >>> ');
+    e.preventDefault();
+    setAwake(BEFORE_AWAKE);
+    const file: FileInfo = e.dataTransfer.files[0];
+    handleFiles(file);
+  };
+
+  const onDragEnter = (e) => {
+    console.log('Enter >>> ');
+    e.preventDefault();
+    setAwake(AFTER_AWAKE);
+  };
+
+  const onDragOver = (e) => {
+    console.log('Over >>> ');
+    e.preventDefault();
+  };
+
+  const onDragLeave = (e) => {
+    console.log('Leave >>> ');
+    setAwake(BEFORE_AWAKE);
+  };
+
+  const onDragExit = (e) => {
+    console.log('Exit >>> ');
+  };
+
+  const onClickInput = (e) => {
+    console.log('Click >>> ');
+    const file: FileInfo = e.target.files[0];
+    handleFiles(file);
+  };
+
+  const handleFiles = (file: FileInfo) => {
+    console.table(file);
+    const { wholeTime: lastModTime } = timeUtils.getTimeFromDate(file.lastModifiedDate);
+    const targetFileInfo = {
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      lastModTime,
+    };
+    setFileInfo({ ...fileInfo, ...targetFileInfo });
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      console.log('result >>>> ', e.target?.result);
+      setFileEntity(e.target?.result as FileEntity);
+    };
+    reader.readAsText(file);
+  };
+
   const getProperDisplay = () => {
-    return flag ? (
+    return fileEntity ? (
       <div className="inputWrapper">
         <img src={search} alt="oops..." className={style.prefix} />
         <input placeholder="write in RegExp to sift what u want" className={style.input} onChange={onChange} />
       </div>
     ) : (
       <>
-        <div className="dropArea" />
-        <input type="file" />
+        <label
+          htmlFor="file"
+          className={style.dropArea}
+          onDrop={onDrop}
+          onDragEnter={onDragEnter}
+          onDragOver={onDragOver}
+          onDragExit={onDragExit}
+          onDragLeave={onDragLeave}
+        >
+          {awake}
+        </label>
+        <input onChange={onClickInput} type="file" id="file" className={style.inputUpload} />
       </>
     );
   };
