@@ -18,21 +18,30 @@ interface FileInfo {
   // [propNames: string]: any | (() => any);
 }
 
-type FileEntity = string | null;
+interface FileNeeded {
+  name: string;
+  lastModified?: number;
+  lastModifiedDate?: Date;
+  size: string;
+  type: string;
+  [propNames: string]: any | (() => any);
+}
+
+type FileEntity = Array<string | null>;
 
 const BEFORE_AWAKE = 'drop your file here or click';
 const AFTER_AWAKE = 'come baby';
 const FILE_INFO = {
   name: '',
-  size: -99,
+  size: -99 + 'M',
   type: '',
   lastModTime: '',
 };
 
 const FileHandler: FC = () => {
-  const [fileEntity, setFileEntity] = useState<FileEntity>(null);
+  const [fileEntity, setFileEntity] = useState<FileEntity>();
   const [awake, setAwake] = useState(BEFORE_AWAKE);
-  const [fileInfo, setFileInfo] = useState(FILE_INFO);
+  const [fileInfo, setFileInfo] = useState<FileNeeded>(FILE_INFO);
 
   const onChange = (e) => {
     console.log(e);
@@ -77,7 +86,7 @@ const FileHandler: FC = () => {
     const { wholeTime: lastModTime } = timeUtils.getTimeFromDate(file.lastModifiedDate);
     const targetFileInfo = {
       name: file.name,
-      size: file.size,
+      size: (file.size / (1024 * 1024)).toFixed(2) + 'M',
       type: file.type,
       lastModTime,
     };
@@ -86,7 +95,10 @@ const FileHandler: FC = () => {
     const reader = new FileReader();
     reader.onload = (e) => {
       console.log('result >>>> ', e.target?.result);
-      setFileEntity(e.target?.result as FileEntity);
+      const origin: string = e.target!.result as string;
+      const split = origin!.split('\n');
+      console.log('split >>>> ', split);
+      setFileEntity(split);
     };
     reader.readAsText(file);
   };
@@ -108,6 +120,14 @@ const FileHandler: FC = () => {
         <div className={style.inputWrapper}>
           <img src={search} alt="oops..." className={style.prefix} />
           <input placeholder="write in RegExp to sift what u want" className={style.input} onChange={onChange} />
+        </div>
+        <div className={style.showList}>
+          {fileEntity.map((item, index) => (
+            <div key={index} className={style.listItem}>
+              <span>{`${index + 1}. `}</span>
+              <span className={style.listContent}>{item}</span>
+            </div>
+          ))}
         </div>
       </>
     ) : (
