@@ -93,10 +93,23 @@ const FileHandler: FC = () => {
 
   const getProperDisplay = () => {
     return fileEntity ? (
-      <div className="inputWrapper">
-        <img src={search} alt="oops..." className={style.prefix} />
-        <input placeholder="write in RegExp to sift what u want" className={style.input} onChange={onChange} />
-      </div>
+      <>
+        <div className={style.fileInfo}>
+          <em className="remind">{'FILE INFO -> '}</em>
+          {Object.keys(fileInfo).map((key) => (
+            <div key={key} className={style.fileInfoItem}>
+              <div className={style.infoLeft}>{key}</div>
+              {': '}
+              <div className={style.infoRight}>{fileInfo[key]}</div>
+              &nbsp;&nbsp;&nbsp;
+            </div>
+          ))}
+        </div>
+        <div className={style.inputWrapper}>
+          <img src={search} alt="oops..." className={style.prefix} />
+          <input placeholder="write in RegExp to sift what u want" className={style.input} onChange={onChange} />
+        </div>
+      </>
     ) : (
       <>
         <label
