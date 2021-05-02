@@ -46,7 +46,7 @@
 .input:focus {
   outline: none;
   border-width: 2px;
-  border-color: red;
+  /* border-color: red; */
 }
 
 /* show list */

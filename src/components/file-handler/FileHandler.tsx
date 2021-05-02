@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react';
 import style from './FileHandler.css';
 import search from './image/search.png';
 import timeUtils from '../../utils/time';
+import utils from '../../utils';
 import transition from '../common/transition';
 
 const TAG = 'FileHandler';
@@ -39,13 +40,31 @@ const FILE_INFO = {
   lastModTime: '',
 };
 
+let BUFFER: Array<string> = [];
+
 const FileHandler: FC = () => {
   const [fileEntity, setFileEntity] = useState<FileEntity>();
   const [awake, setAwake] = useState(BEFORE_AWAKE);
   const [fileInfo, setFileInfo] = useState<FileNeeded>(FILE_INFO);
 
   const onChange = (e) => {
-    console.log(e);
+    const userInput = e.target.value;
+    if (!userInput) {
+      setFileEntity(BUFFER);
+    }
+    const re = new RegExp(e.target.value);
+    console.log('re >>> ', re);
+    // const filter = BUFFER.filter((str) => re.test(str));
+    const length = BUFFER.length;
+    const filter: string[] = [];
+    // 普通 for 循环是 ForEach 性能的 100 多倍，filter map 等性能更差
+    for (let i = 0; i < length; i++) {
+      const item = BUFFER[i];
+      if (re.test(item)) {
+        filter.push(item);
+      }
+    }
+    setFileEntity(filter);
   };
 
   const onDrop = (e) => {
@@ -99,16 +118,14 @@ const FileHandler: FC = () => {
     const reader = new FileReader();
     reader.onload = (e) => {
       transition.disappear();
-      console.log('result >>>> ', e.target?.result);
       const origin: string = e.target!.result as string;
       Promise.resolve().then(() => {
         const split = origin!.split('\n');
         const res = split.map((item) => {
           return item.replace('$$info$$', '');
         });
-        console.log('split >>>> ', res);
-
         setFileEntity(res);
+        BUFFER = res;
       });
     };
     reader.readAsText(file);
@@ -130,13 +147,18 @@ const FileHandler: FC = () => {
         </div>
         <div className={style.inputWrapper}>
           <img src={search} alt="oops..." className={style.prefix} />
-          <input placeholder="write in RegExp to sift what u want" className={style.input} onChange={onChange} />
+          <input
+            placeholder="write in RegExp to sift what u want"
+            className={style.input}
+            onChange={utils.debounce(onChange, 1000)}
+          />
         </div>
         <div className={style.showList}>
           {fileEntity.map((item, index) => (
             <div key={index} className={style.listItem}>
-              <span>{`${index + 1}. `}</span>
               <div className={style.listContent}>{item}</div>
+              <br />
+              <br />
             </div>
           ))}
         </div>
