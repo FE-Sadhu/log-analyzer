@@ -52,20 +52,23 @@
 /* show list */
 .showList {
   width: 80%;
+  height: 100%;
   margin: 0 auto;
   margin-top: 30px;
   padding: 10px 5px;
   border: 1px dotted gray;
+  overflow: auto;
 }
 
 .listItem {
 }
 
 .listContent {
-  width: 80px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  display: inline-block;
+  /* width: 80px; */
+  /* overflow: auto; */
+  /* white-space: nowrap; */
+  /* text-overflow: ellipsis; */
 }
 /* drop */
 .dropArea {

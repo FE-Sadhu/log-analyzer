@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react';
 import style from './FileHandler.css';
 import search from './image/search.png';
 import timeUtils from '../../utils/time';
+import transition from '../common/transition';
 
 const TAG = 'FileHandler';
 interface FileInfo {
@@ -82,6 +83,7 @@ const FileHandler: FC = () => {
   };
 
   const handleFiles = (file: FileInfo) => {
+    transition.show();
     console.table(file);
     const { wholeTime: lastModTime } = timeUtils.getTimeFromDate(file.lastModifiedDate);
     const targetFileInfo = {
@@ -90,15 +92,24 @@ const FileHandler: FC = () => {
       type: file.type,
       lastModTime,
     };
-    setFileInfo({ ...fileInfo, ...targetFileInfo });
+    setFileInfo((prevFileInfo) => {
+      return { ...prevFileInfo, ...targetFileInfo };
+    });
 
     const reader = new FileReader();
     reader.onload = (e) => {
+      transition.disappear();
       console.log('result >>>> ', e.target?.result);
       const origin: string = e.target!.result as string;
-      const split = origin!.split('\n');
-      console.log('split >>>> ', split);
-      setFileEntity(split);
+      Promise.resolve().then(() => {
+        const split = origin!.split('\n');
+        const res = split.map((item) => {
+          return item.replace('$$info$$', '');
+        });
+        console.log('split >>>> ', res);
+
+        setFileEntity(res);
+      });
     };
     reader.readAsText(file);
   };
@@ -125,7 +136,7 @@ const FileHandler: FC = () => {
           {fileEntity.map((item, index) => (
             <div key={index} className={style.listItem}>
               <span>{`${index + 1}. `}</span>
-              <span className={style.listContent}>{item}</span>
+              <div className={style.listContent}>{item}</div>
             </div>
           ))}
         </div>
