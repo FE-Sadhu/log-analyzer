@@ -4,6 +4,20 @@ import search from './image/search.png';
 import timeUtils from '../../utils/time';
 import utils from '../../utils';
 import transition from '../common/transition';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 280,
+  },
+}));
 
 const TAG = 'FileHandler';
 interface FileInfo {
@@ -46,7 +60,7 @@ const FileHandler: FC = () => {
   const [fileEntity, setFileEntity] = useState<FileEntity>();
   const [awake, setAwake] = useState(BEFORE_AWAKE);
   const [fileInfo, setFileInfo] = useState<FileNeeded>(FILE_INFO);
-
+  const classes = useStyles();
   const onChange = (e) => {
     const userInput = e.target.value;
     if (!userInput) {
@@ -57,7 +71,7 @@ const FileHandler: FC = () => {
     // const filter = BUFFER.filter((str) => re.test(str));
     const length = BUFFER.length;
     const filter: string[] = [];
-    // 普通 for 循环是 ForEach 性能的 100 多倍，filter map 等性能更差
+    // 普通 for 循环是 ForEach 性能的 30 多倍，filter map 等性能更差
     for (let i = 0; i < length; i++) {
       const item = BUFFER[i];
       if (re.test(item)) {
@@ -146,12 +160,41 @@ const FileHandler: FC = () => {
           ))}
         </div>
         <div className={style.inputWrapper}>
-          <img src={search} alt="oops..." className={style.prefix} />
-          <input
-            placeholder="write in RegExp to sift what u want"
-            className={style.input}
-            onChange={utils.debounce(onChange, 1000)}
-          />
+          <div className={style.regExp}>
+            <img src={search} alt="oops..." className={style.prefix} />
+            <input
+              placeholder="write in RegExp to sift what u want"
+              className={style.input}
+              onChange={utils.debounce(onChange, 1000)}
+            />
+          </div>
+          <div className={style.timeSift}>
+            <form className={classes.container} noValidate>
+              <TextField
+                id="datetime-local"
+                label="start"
+                type="datetime-local"
+                // defaultValue={`${new Date().toISOString().split('.')[0]}`}
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </form>
+            <br />
+            <form className={classes.container} noValidate>
+              <TextField
+                id="datetime-local"
+                label="end"
+                type="datetime-local"
+                defaultValue="2017-05-24T10:30"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </form>
+          </div>
         </div>
         <div className={style.showList}>
           {fileEntity.map((item, index) => (
