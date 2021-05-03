@@ -4,6 +4,14 @@ log-analyzer can analyze any file about text. (log、word、txt、etc)
 
 ### Usage
 
+```js
+git clone git@github.com:YxrSadhu/log-analyzer.git
+
+npm i
+
+npm run start
+```
+
 After uploading the file, u can input Regular Expression to filter information.
 
 If content begin with time like (xxxx-xx-xx xx:xx:xx), u can also sift information through time filter. choose starting time and ending time, the information will be sifted in this range.
