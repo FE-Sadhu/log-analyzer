@@ -29,6 +29,7 @@
   "editor.tabSize": 2,
   "prettier.requireConfig": true,
   "cSpell.words": [
+    "Cped",
     "antd",
     "corejs",
     "pmmmwh",

@@ -60,7 +60,10 @@ const FileHandler: FC = () => {
   const [fileEntity, setFileEntity] = useState<FileEntity>();
   const [awake, setAwake] = useState(BEFORE_AWAKE);
   const [fileInfo, setFileInfo] = useState<FileNeeded>(FILE_INFO);
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
   const classes = useStyles();
+
   const onChange = (e) => {
     const userInput = e.target.value;
     if (!userInput) {
@@ -138,11 +141,46 @@ const FileHandler: FC = () => {
         const res = split.map((item) => {
           return item.replace('$$info$$', '');
         });
+        const lastIndex = res.length - 2;
+        const first = res[0];
+        const final = res[lastIndex];
+        const startTime = first.slice(0, 16).replace(' ', 'T');
+        const endTime = final.slice(0, 16).replace(' ', 'T');
+        setStartTime(startTime);
+        setEndTime(endTime);
         setFileEntity(res);
         BUFFER = res;
       });
     };
     reader.readAsText(file);
+  };
+
+  const onStartTimeChange = (e) => {
+    console.log('onStartTimeChange >>> ', e.target.value);
+    const compare = e.target.value.replace('T', ' ');
+    const length = fileEntity!.length;
+    const newArr: string[] = [];
+    for (let i = 0; i < length; i++) {
+      const beCped = fileEntity![i]!.slice(0, 16);
+      if (beCped >= compare) {
+        newArr.push(fileEntity![i]!);
+      }
+    }
+    setFileEntity(newArr);
+  };
+
+  const onEndTimeChange = (e) => {
+    console.log('onEndTimeChange >>> ', e.target.value);
+    const compare = e.target.value.replace('T', ' ');
+    const length = fileEntity!.length;
+    const newArr: string[] = [];
+    for (let i = 0; i < length; i++) {
+      const beCped = fileEntity![i]!.slice(0, 16);
+      if (beCped <= compare) {
+        newArr.push(fileEntity![i]!);
+      }
+    }
+    setFileEntity(newArr);
   };
 
   const getProperDisplay = () => {
@@ -171,10 +209,11 @@ const FileHandler: FC = () => {
           <div className={style.timeSift}>
             <form className={classes.container} noValidate>
               <TextField
+                onBlur={onStartTimeChange}
                 id="datetime-local"
                 label="start"
                 type="datetime-local"
-                // defaultValue={`${new Date().toISOString().split('.')[0]}`}
+                defaultValue={startTime}
                 className={classes.textField}
                 InputLabelProps={{
                   shrink: true,
@@ -184,10 +223,11 @@ const FileHandler: FC = () => {
             <br />
             <form className={classes.container} noValidate>
               <TextField
+                onBlur={onEndTimeChange}
                 id="datetime-local"
                 label="end"
                 type="datetime-local"
-                defaultValue="2017-05-24T10:30"
+                defaultValue={endTime}
                 className={classes.textField}
                 InputLabelProps={{
                   shrink: true,
