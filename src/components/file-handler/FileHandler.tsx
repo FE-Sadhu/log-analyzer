@@ -39,7 +39,7 @@ interface FileNeeded {
   lastModified?: number;
   lastModifiedDate?: Date;
   size: string;
-  type: string;
+  type?: string;
   [propNames: string]: any | (() => any);
 }
 
@@ -50,7 +50,6 @@ const AFTER_AWAKE = 'come baby';
 const FILE_INFO = {
   name: '',
   size: -99 + 'M',
-  type: '',
   lastModTime: '',
 };
 
@@ -125,7 +124,7 @@ const FileHandler: FC = () => {
     const targetFileInfo = {
       name: file.name,
       size: (file.size / (1024 * 1024)).toFixed(2) + 'M',
-      type: file.type,
+      type: file.type ? file.type : 'momoko',
       lastModTime,
     };
     setFileInfo((prevFileInfo) => {
@@ -224,7 +223,7 @@ const FileHandler: FC = () => {
             <form className={classes.container} noValidate>
               <TextField
                 onBlur={onEndTimeChange}
-                id="datetime-local"
+                id="datetime-local-2"
                 label="end"
                 type="datetime-local"
                 defaultValue={endTime}
