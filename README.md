@@ -1,11 +1,25 @@
-Just four things u need to know 👻
+### About
 
-👉🏿 If u wanna consult some configs (like `ESLint`, `Prettier` ...) that you should do well when init the project, plz switch to branch `main`.
+log-analyzer can analyze any file about text. (log、word、txt、etc)
 
-✌🏽 If u wanna consult perfect configs with `webpack`,`babel`,`react`,`typescript`, check out the branch `configure_webpack`.
+### Usage
 
-🤟 I guess u will look up this repo time and again, welcome to `star` and `fork` :)
+After uploading the file, u can input Regular Expression to filter information.
 
-🖖🏼 If some dependencies are upgraded, I'd like to embrace changes. So, u can `watch` this repo to get latest version.
+If content begin with time like (xxxx-xx-xx xx:xx:xx), u can also sift information through time filter. choose starting time and ending time, the information will be sifted in this range.
 
-happy hacking 🎉
+...
+
+### Features
+
+- [x] click to upload file
+- [x] drag & drop file
+- [x] use Regular Expression to sift
+- [x] use time range to sift
+- [ ] spread a customized range of filtered info
+
+### Final
+
+I'd be very grateful if u guys give me any inspiration😸.
+
+If u have some thoughts about the project , plz create a [issue](https://github.com/YxrSadhu/log-analyzer/issues).
