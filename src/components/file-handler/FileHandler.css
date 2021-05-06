@@ -2,6 +2,7 @@
   margin-top: 70px;
   width: 100%;
   height: 100%;
+  /* background-color: #f4f9f9; */
 }
 
 .fileInfo {
@@ -74,6 +75,7 @@
   padding: 10px 5px;
   border: 1px dotted gray;
   overflow: auto;
+  background-color: #f4f9f9;
 }
 
 .listItem {
