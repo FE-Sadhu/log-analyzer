@@ -69,7 +69,6 @@ const FileHandler: FC = () => {
       setFileEntity(BUFFER);
     }
     const re = new RegExp(e.target.value);
-    console.log('re >>> ', re);
     // const filter = BUFFER.filter((str) => re.test(str));
     const length = BUFFER.length;
     const filter: string[] = [];
@@ -84,7 +83,6 @@ const FileHandler: FC = () => {
   };
 
   const onDrop = (e) => {
-    console.log('Drop >>> ');
     e.preventDefault();
     setAwake(BEFORE_AWAKE);
     const file: FileInfo = e.dataTransfer.files[0];
@@ -92,34 +90,27 @@ const FileHandler: FC = () => {
   };
 
   const onDragEnter = (e) => {
-    console.log('Enter >>> ');
     e.preventDefault();
     setAwake(AFTER_AWAKE);
   };
 
   const onDragOver = (e) => {
-    console.log('Over >>> ');
     e.preventDefault();
   };
 
   const onDragLeave = (e) => {
-    console.log('Leave >>> ');
     setAwake(BEFORE_AWAKE);
   };
 
-  const onDragExit = (e) => {
-    console.log('Exit >>> ');
-  };
+  const onDragExit = (e) => {};
 
   const onClickInput = (e) => {
-    console.log('Click >>> ');
     const file: FileInfo = e.target.files[0];
     handleFiles(file);
   };
 
   const handleFiles = (file: FileInfo) => {
     transition.show();
-    console.table(file);
     const { wholeTime: lastModTime } = timeUtils.getTimeFromDate(file.lastModifiedDate);
     const targetFileInfo = {
       name: file.name,
@@ -155,7 +146,6 @@ const FileHandler: FC = () => {
   };
 
   const onStartTimeChange = (e) => {
-    console.log('onStartTimeChange >>> ', e.target.value);
     const compare = e.target.value.replace('T', ' ');
     const length = fileEntity!.length;
     const newArr: string[] = [];
@@ -169,7 +159,6 @@ const FileHandler: FC = () => {
   };
 
   const onEndTimeChange = (e) => {
-    console.log('onEndTimeChange >>> ', e.target.value);
     const compare = e.target.value.replace('T', ' ');
     const length = fileEntity!.length;
     const newArr: string[] = [];
@@ -180,6 +169,35 @@ const FileHandler: FC = () => {
       }
     }
     setFileEntity(newArr);
+  };
+
+  const onMouseUp = (e: React.MouseEvent) => {
+    const node = document.getElementById('showJSON');
+    node && document.body.removeChild(node);
+    const { clientX, clientY } = e;
+    const selection: Selection | null = window.getSelection();
+    const rangeTxt = selection?.toString();
+    if (!rangeTxt) return;
+    const wholeText = selection!.focusNode!.textContent;
+    const re = /\{.+\}/g; // 贪婪匹配
+    const objArr = wholeText?.match(re);
+    const objStr = objArr ? objArr[0] : null;
+    if (!objStr) return;
+    let handle = '';
+    if (objStr.includes('},{') && !objStr.includes('[')) {
+      handle = '[' + objStr + ']';
+    } else {
+      handle = objStr;
+    }
+    const resolved = JSON.parse(handle);
+    const pre = document.createElement('pre');
+    pre.setAttribute('id', 'showJSON');
+    pre.innerHTML = JSON.stringify(resolved, null, 2);
+    pre.setAttribute(
+      'style',
+      `position: fixed; left: ${clientX}px; top: ${clientY}px; max-height: 800px; overflow: auto; transform: translateY(-100%); background-color: #6495ED; border: 1px solid black`,
+    );
+    document.body.appendChild(pre);
   };
 
   const getProperDisplay = () => {
@@ -235,7 +253,7 @@ const FileHandler: FC = () => {
             </form>
           </div>
         </div>
-        <div className={style.showList}>
+        <div className={style.showList} onMouseUp={onMouseUp}>
           {fileEntity.map((item, index) => (
             <div key={index} className={style.listItem}>
               <div className={style.listContent}>{item}</div>
