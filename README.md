@@ -25,7 +25,7 @@ If content begin with time like (xxxx-xx-xx xx:xx:xx), u can also sift informati
 - [x] use Regular Expression to sift
 - [x] use time range to sift
 - [ ] spread a customized range of filtered info
-- [ ] hove show format json
+- [x] hover show format json
 
 ### Final
 
