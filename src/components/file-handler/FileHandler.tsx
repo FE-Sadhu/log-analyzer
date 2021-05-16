@@ -128,9 +128,18 @@ const FileHandler: FC = () => {
       const origin: string = e.target!.result as string;
       Promise.resolve().then(() => {
         const split = origin!.split('\n');
+        console.time('map');
         const res = split.map((item) => {
           return item.replace('$$info$$', '');
         });
+        console.timeEnd('map');
+        console.time('sort');
+        res.sort((a, b) => {
+          const prev = new Date(a.slice(0, 19)).getTime();
+          const next = new Date(b.slice(0, 19)).getTime();
+          return prev - next;
+        });
+        console.timeEnd('sort');
         const lastIndex = res.length - 2;
         const first = res[0];
         const final = res[lastIndex];
@@ -138,7 +147,9 @@ const FileHandler: FC = () => {
         const endTime = final.slice(0, 16).replace(' ', 'T');
         setStartTime(startTime);
         setEndTime(endTime);
+        console.time('init');
         setFileEntity(res);
+        console.timeEnd('init');
         BUFFER = res;
       });
     };
@@ -195,7 +206,7 @@ const FileHandler: FC = () => {
     pre.innerHTML = JSON.stringify(resolved, null, 2);
     pre.setAttribute(
       'style',
-      `position: fixed; left: ${clientX}px; top: ${clientY}px; max-height: 800px; overflow: auto; transform: translateY(-100%); background-color: #6495ED; border: 1px solid black`,
+      `position: fixed; left: ${clientX}px; top: ${clientY}px; max-height: ${clientY}px; overflow: auto; transform: translateY(-100%); background-color: #FFFACD; opacity: 0.8 ;border: 1px solid black; border-radius: 10px`,
     );
     document.body.appendChild(pre);
   };
