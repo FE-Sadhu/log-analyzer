@@ -1,8 +1,0 @@
-/*!
- * react-ts-build-from-scratch v1.0.0
- * Author: Sadhu
- * Email: sadhu.wu@gmall.com
- * repository: https://github.com/YxrSadhu/react-ts-build-from-scratch
- * license: ISC
- * Date: Sun May 16 2021 23:59:10 GMT+0800 (中国标准时间)
- */
